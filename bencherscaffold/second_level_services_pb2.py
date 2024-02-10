@@ -11,7 +11,7 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from bencher.protos import bencher_pb2 as bencher__pb2
+from bencherscaffold import bencher_pb2 as bencher__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1bsecond_level_services.proto\x1a\rbencher.proto2M\n\x12SecondLevelBencher\x12\x37\n\rEvaluatePoint\x12\x11.BenchmarkRequest\x1a\x11.EvaluationResult\"\x00\x62\x06proto3')
