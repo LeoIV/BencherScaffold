@@ -1,6 +1,7 @@
 import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
+from typing import Optional
 
 import grpc
 
@@ -13,7 +14,7 @@ class GRCPService(SecondLevelBencherServicer):
     def __init__(
             self,
             port: int = 50000,
-            n_cores: int | None = None
+            n_cores: Optional[int] = None
     ):
         """
         Args:
