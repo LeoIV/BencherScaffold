@@ -1,8 +1,7 @@
 syntax = "proto3";
 
 service Bencher {
-
-  rpc EvaluatePoint(BenchmarkRequest) returns (EvaluationResult){};
+  rpc evaluate_point(BenchmarkRequest) returns (EvaluationResult){};
 }
 
 // a benchmark request contains a point and the name of the benchmark

@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-import "bencher.proto";
-
-service SecondLevelBencher {
-
-  rpc EvaluatePoint(BenchmarkRequest) returns (EvaluationResult){};
-}

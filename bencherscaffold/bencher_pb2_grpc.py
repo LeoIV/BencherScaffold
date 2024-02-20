@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from bencherscaffold import bencher_pb2 as bencher__pb2
+from bencherscaffold import bencher_pb2 as bencherscaffold_dot_protos_dot_bencher__pb2
 
 
 class BencherStub(object):
@@ -14,17 +14,17 @@ class BencherStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.EvaluatePoint = channel.unary_unary(
-                '/Bencher/EvaluatePoint',
-                request_serializer=bencher__pb2.BenchmarkRequest.SerializeToString,
-                response_deserializer=bencher__pb2.EvaluationResult.FromString,
+        self.evaluate_point = channel.unary_unary(
+                '/Bencher/evaluate_point',
+                request_serializer=bencherscaffold_dot_protos_dot_bencher__pb2.BenchmarkRequest.SerializeToString,
+                response_deserializer=bencherscaffold_dot_protos_dot_bencher__pb2.EvaluationResult.FromString,
                 )
 
 
 class BencherServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def EvaluatePoint(self, request, context):
+    def evaluate_point(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -33,10 +33,10 @@ class BencherServicer(object):
 
 def add_BencherServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'EvaluatePoint': grpc.unary_unary_rpc_method_handler(
-                    servicer.EvaluatePoint,
-                    request_deserializer=bencher__pb2.BenchmarkRequest.FromString,
-                    response_serializer=bencher__pb2.EvaluationResult.SerializeToString,
+            'evaluate_point': grpc.unary_unary_rpc_method_handler(
+                    servicer.evaluate_point,
+                    request_deserializer=bencherscaffold_dot_protos_dot_bencher__pb2.BenchmarkRequest.FromString,
+                    response_serializer=bencherscaffold_dot_protos_dot_bencher__pb2.EvaluationResult.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -49,7 +49,7 @@ class Bencher(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def EvaluatePoint(request,
+    def evaluate_point(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class Bencher(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Bencher/EvaluatePoint',
-            bencher__pb2.BenchmarkRequest.SerializeToString,
-            bencher__pb2.EvaluationResult.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Bencher/evaluate_point',
+            bencherscaffold_dot_protos_dot_bencher__pb2.BenchmarkRequest.SerializeToString,
+            bencherscaffold_dot_protos_dot_bencher__pb2.EvaluationResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
