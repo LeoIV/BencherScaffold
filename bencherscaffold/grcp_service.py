@@ -44,7 +44,7 @@ class GRCPService(SecondLevelBencherServicer):
         port = str(self.port)
         server = grpc.server(ThreadPoolExecutor(max_workers=n_cores))
         second_level_services_pb2_grpc.add_SecondLevelBencherServicer_to_server(self, server)
-        server.add_insecure_port("[::]:" + port)
+        server.add_insecure_port("localhost:" + port)
         server.start()
         print("Server started, listening on " + port)
         server.wait_for_termination()
