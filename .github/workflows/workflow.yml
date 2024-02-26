@@ -47,8 +47,6 @@ jobs:
       - name: Publish package distributions to PyPI
         # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://pypi.org/legacy/
       - name: Run update scaffold action in bencher repo
         uses: actions/github-script@v6
         with:
