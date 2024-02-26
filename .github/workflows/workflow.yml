@@ -60,6 +60,6 @@ jobs:
               event_type: 'update_scaffold',
               workflow_id: 'update_scaffold_version.yml',
             })
-            console.log(result) # comment to trigger workflow
+            console.log(result) # comment to trigger workflow1
 
 
