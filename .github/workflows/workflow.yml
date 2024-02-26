@@ -54,12 +54,11 @@ jobs:
         with:
           github-token: ${{ secrets.BENCHER_TOKEN }}
           script: |
-            const result = await github.rest.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
               owner: 'LeoIV',
               repo: 'bencher',
               event_type: 'update_scaffold',
-              workflow_id: 'update_scaffold_version.yml',
-            })
-            console.log(result) # comment to trigger workflow1
+              workflow_id: 'update_scaffold_version.yml'
+            });
 
 
