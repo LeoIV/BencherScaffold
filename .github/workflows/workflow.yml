@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: testpypi
-      url: https://test.pypi.org/p/bencherscaffold
+      name: pypi
+      url: https://pypi.org/p/bencherscaffold
     permissions:
       id-token: write
       contents: write
@@ -44,11 +44,11 @@ jobs:
         # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         run: poetry build
 
-      - name: Publish package distributions to TestPyPI
+      - name: Publish package distributions to PyPI
         # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          repository-url: https://test.pypi.org/legacy/
+          repository-url: https://pypi.org/legacy/
       - name: Run update scaffold action in bencher repo
         uses: actions/github-script@v6
         with:
@@ -60,6 +60,5 @@ jobs:
               ref: 'master',
               workflow_id: 'update_scaffold_version.yml'
             });
-        # trigger1
 
 
