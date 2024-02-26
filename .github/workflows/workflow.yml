@@ -49,6 +49,16 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
-      
+      - name: Test
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.BENCHER_TOKEN }}
+          script: |
+            const result = await github.rest.actions.createWorkflowDispatch({
+              owner: 'LeoIV',
+              repo: 'bencher',
+              event_type: 'update_scaffold',
+            })
+            console.log(result)
 
 
