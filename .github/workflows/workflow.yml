@@ -49,7 +49,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
-      - name: Test
+      - name: Run update scaffold action in bencher repo
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.BENCHER_TOKEN }}
@@ -58,6 +58,7 @@ jobs:
               owner: 'LeoIV',
               repo: 'bencher',
               event_type: 'update_scaffold',
+              workflow_id: 'update_scaffold_version.yml',
             })
             console.log(result)
 
