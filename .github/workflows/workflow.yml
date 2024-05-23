@@ -57,7 +57,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'LeoIV',
               repo: 'bencher',
-              ref: 'master',
+              ref: 'main',
               workflow_id: 'update_scaffold_version.yml'
             });
 
