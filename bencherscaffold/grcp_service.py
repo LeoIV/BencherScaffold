@@ -47,4 +47,4 @@ class GRCPService(SecondLevelBencherServicer):
         server.add_insecure_port("127.0.0.1:" + port)
         server.start()
         print("Server started, listening on " + port)
-        server.wait_for_termination()
+        server.wait_for_termination() # nudge
