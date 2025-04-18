@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from bencherscaffold import bencher_pb2 as bencherscaffold_dot_protos_dot_bencher__pb2
+from bencherscaffold.protoclasses import bencher_pb2 as bencherscaffold_dot_protos_dot_bencher__pb2
 
 
 class BencherStub(object):

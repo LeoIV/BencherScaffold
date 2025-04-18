@@ -12,7 +12,7 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from bencherscaffold import bencher_pb2 as bencherscaffold_dot_protos_dot_bencher__pb2
+from bencherscaffold.protoclasses import bencher_pb2 as bencherscaffold_dot_protos_dot_bencher__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n2bencherscaffold/protos/second_level_services.proto\x1a$bencherscaffold/protos/bencher.proto2N\n\x12SecondLevelBencher\x12\x38\n\x0e\x65valuate_point\x12\x11.BenchmarkRequest\x1a\x11.EvaluationResult\"\x00\x62\x06proto3')
