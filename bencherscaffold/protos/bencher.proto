@@ -17,6 +17,7 @@ enum PointType {
   CONTINUOUS = 0;
   BINARY = 1;
   INTEGER = 2;
+  CATEGORICAL = 3;
 }
 
 message Benchmark {
@@ -27,7 +28,7 @@ message Benchmark {
 
 // a benchmark request contains a point and the name of the benchmark
 message BenchmarkRequest {
-  string benchmark = 1;
+  Benchmark benchmark = 1;
   Point point = 2;
 }
 

@@ -20,6 +20,7 @@ class PointType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     CONTINUOUS: _ClassVar[PointType]
     BINARY: _ClassVar[PointType]
     INTEGER: _ClassVar[PointType]
+    CATEGORICAL: _ClassVar[PointType]
 PURELY_CONTINUOUS: BenchmarkType
 PURELY_BINARY: BenchmarkType
 PURELY_CATEGORICAL: BenchmarkType
@@ -29,6 +30,7 @@ MIXED: BenchmarkType
 CONTINUOUS: PointType
 BINARY: PointType
 INTEGER: PointType
+CATEGORICAL: PointType
 
 class Benchmark(_message.Message):
     __slots__ = ("name", "type", "description")
@@ -44,9 +46,9 @@ class BenchmarkRequest(_message.Message):
     __slots__ = ("benchmark", "point")
     BENCHMARK_FIELD_NUMBER: _ClassVar[int]
     POINT_FIELD_NUMBER: _ClassVar[int]
-    benchmark: str
+    benchmark: Benchmark
     point: Point
-    def __init__(self, benchmark: _Optional[str] = ..., point: _Optional[_Union[Point, _Mapping]] = ...) -> None: ...
+    def __init__(self, benchmark: _Optional[_Union[Benchmark, _Mapping]] = ..., point: _Optional[_Union[Point, _Mapping]] = ...) -> None: ...
 
 class Point(_message.Message):
     __slots__ = ("values", "type")

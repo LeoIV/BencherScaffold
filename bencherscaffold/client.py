@@ -3,7 +3,8 @@ from collections.abc import Sequence
 
 import grpc
 
-from bencherscaffold.protoclasses.bencher_pb2 import BenchmarkRequest, EvaluationResult
+from bencherscaffold.protoclasses.bencher_pb2 import BenchmarkRequest, EvaluationResult, PointType, Point, Benchmark, \
+    BenchmarkType
 from bencherscaffold.protoclasses.bencher_pb2_grpc import BencherStub
 
 
@@ -30,8 +31,9 @@ class BencherClient:
 
     def evaluate_point(
             self,
-            benchmark: str,
+            benchmark_name: str,
             point: Sequence[float],
+            type: PointType = PointType.CONTINUOUS,
     ) -> float:
         """
         Evaluates a point in the benchmark space.
@@ -41,16 +43,37 @@ class BencherClient:
         The point must be a sequence of floats, and its length must match the number of dimensions of the benchmark.
 
         Args:
-            benchmark: The name of the benchmark to evaluate.
+            benchmark_name: The name of the benchmark to evaluate.
             point:  A sequence of floats representing the point in the benchmark space to evaluate.
 
         Returns:
             The evaluated value of the point in the benchmark space.
 
         """
+        match type:
+            case PointType.CONTINUOUS:
+                benchmark_type = BenchmarkType.PURELY_CONTINUOUS
+            case PointType.BINARY:
+                benchmark_type = BenchmarkType.PURELY_BINARY
+            case PointType.INTEGER:
+                benchmark_type = BenchmarkType.PURELY_ORDINAL_INT,
+            case PointType.CATEGORICAL:
+                benchmark_type = BenchmarkType.PURELY_CATEGORICAL
+            case _:
+                raise ValueError(f"Unsupported point type: {type}")
+
+        benchmark = Benchmark(
+            name=benchmark_name,
+            type=benchmark_type,
+        )
+
         request = BenchmarkRequest(
             benchmark=benchmark,
-            point={'values': point}
+            point=Point(
+                values=point,
+                type=type,
+            ),
+
         )
         for n_retry in range(self.max_retries):
             try:
