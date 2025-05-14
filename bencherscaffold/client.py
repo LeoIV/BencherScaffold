@@ -52,7 +52,7 @@ class BencherClient:
 
         """
 
-        if all(p.type == ValueType.FLOAT for p in point):
+        if all(p.type == ValueType.CONTINUOUS for p in point):
             benchmark_type = BenchmarkType.PURELY_CONTINUOUS
         elif all(p.type == ValueType.BINARY for p in point):
             benchmark_type = BenchmarkType.PURELY_BINARY
