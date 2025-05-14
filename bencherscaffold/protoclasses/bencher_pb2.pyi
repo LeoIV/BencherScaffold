@@ -15,22 +15,30 @@ class BenchmarkType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     PURELY_ORDINAL_INT: _ClassVar[BenchmarkType]
     MIXED: _ClassVar[BenchmarkType]
 
-class PointType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+class ValueType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
-    CONTINUOUS: _ClassVar[PointType]
-    BINARY: _ClassVar[PointType]
-    INTEGER: _ClassVar[PointType]
-    CATEGORICAL: _ClassVar[PointType]
+    CONTINUOUS: _ClassVar[ValueType]
+    BINARY: _ClassVar[ValueType]
+    INTEGER: _ClassVar[ValueType]
+    CATEGORICAL: _ClassVar[ValueType]
 PURELY_CONTINUOUS: BenchmarkType
 PURELY_BINARY: BenchmarkType
 PURELY_CATEGORICAL: BenchmarkType
 PURELY_ORDINAL_REAL: BenchmarkType
 PURELY_ORDINAL_INT: BenchmarkType
 MIXED: BenchmarkType
-CONTINUOUS: PointType
-BINARY: PointType
-INTEGER: PointType
-CATEGORICAL: PointType
+CONTINUOUS: ValueType
+BINARY: ValueType
+INTEGER: ValueType
+CATEGORICAL: ValueType
+
+class Value(_message.Message):
+    __slots__ = ("type", "value")
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    VALUE_FIELD_NUMBER: _ClassVar[int]
+    type: ValueType
+    value: float
+    def __init__(self, type: _Optional[_Union[ValueType, str]] = ..., value: _Optional[float] = ...) -> None: ...
 
 class Benchmark(_message.Message):
     __slots__ = ("name", "type", "description")
@@ -51,12 +59,10 @@ class BenchmarkRequest(_message.Message):
     def __init__(self, benchmark: _Optional[_Union[Benchmark, _Mapping]] = ..., point: _Optional[_Union[Point, _Mapping]] = ...) -> None: ...
 
 class Point(_message.Message):
-    __slots__ = ("values", "type")
+    __slots__ = ("values",)
     VALUES_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    values: _containers.RepeatedScalarFieldContainer[float]
-    type: PointType
-    def __init__(self, values: _Optional[_Iterable[float]] = ..., type: _Optional[_Union[PointType, str]] = ...) -> None: ...
+    values: _containers.RepeatedCompositeFieldContainer[Value]
+    def __init__(self, values: _Optional[_Iterable[_Union[Value, _Mapping]]] = ...) -> None: ...
 
 class EvaluationResult(_message.Message):
     __slots__ = ("value",)

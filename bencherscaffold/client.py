@@ -3,8 +3,10 @@ from collections.abc import Sequence
 
 import grpc
 
-from bencherscaffold.protoclasses.bencher_pb2 import BenchmarkRequest, EvaluationResult, PointType, Point, Benchmark, \
-    BenchmarkType
+from bencherscaffold.protoclasses.bencher_pb2 import (
+    BenchmarkRequest, EvaluationResult, Point, Benchmark,
+    BenchmarkType, Value, ValueType,
+)
 from bencherscaffold.protoclasses.bencher_pb2_grpc import BencherStub
 
 
@@ -32,8 +34,7 @@ class BencherClient:
     def evaluate_point(
             self,
             benchmark_name: str,
-            point: Sequence[float],
-            type: PointType = PointType.CONTINUOUS,
+            point: Sequence[Value]
     ) -> float:
         """
         Evaluates a point in the benchmark space.
@@ -50,17 +51,17 @@ class BencherClient:
             The evaluated value of the point in the benchmark space.
 
         """
-        match type:
-            case PointType.CONTINUOUS:
-                benchmark_type = BenchmarkType.PURELY_CONTINUOUS
-            case PointType.BINARY:
-                benchmark_type = BenchmarkType.PURELY_BINARY
-            case PointType.INTEGER:
-                benchmark_type = BenchmarkType.PURELY_ORDINAL_INT,
-            case PointType.CATEGORICAL:
-                benchmark_type = BenchmarkType.PURELY_CATEGORICAL
-            case _:
-                raise ValueError(f"Unsupported point type: {type}")
+
+        if all(p.type == ValueType.FLOAT for p in point):
+            benchmark_type = BenchmarkType.PURELY_CONTINUOUS
+        elif all(p.type == ValueType.BINARY for p in point):
+            benchmark_type = BenchmarkType.PURELY_BINARY
+        elif all(p.type == ValueType.INTEGER for p in point):
+            benchmark_type = BenchmarkType.PURELY_ORDINAL_INT,
+        elif all(p.type == ValueType.CATEGORICAL for p in point):
+            benchmark_type = BenchmarkType.PURELY_CATEGORICAL
+        else:
+            benchmark_type = BenchmarkType.MIXED
 
         benchmark = Benchmark(
             name=benchmark_name,
@@ -71,7 +72,6 @@ class BencherClient:
             benchmark=benchmark,
             point=Point(
                 values=point,
-                type=type,
             ),
 
         )

@@ -13,11 +13,16 @@ enum BenchmarkType {
   MIXED = 5;
 }
 
-enum PointType {
+enum ValueType {
   CONTINUOUS = 0;
   BINARY = 1;
   INTEGER = 2;
   CATEGORICAL = 3;
+}
+
+message Value {
+  ValueType type = 1;
+  double value = 2;
 }
 
 message Benchmark {
@@ -34,8 +39,7 @@ message BenchmarkRequest {
 
 // a point is a list of doubles
 message Point {
-  repeated double values = 1;
-  PointType type = 2;
+  repeated Value values = 1;
 }
 
 // an evaluation result just contains a double (for now)
